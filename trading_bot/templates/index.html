@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Bot Dashboard</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .dashboard {
+            background-color: #1e1e1e;
+            padding: 2rem 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            text-align: center;
+            min-width: 320px;
+        }
+        h1 { margin-top: 0; font-size: 1.5rem; color: #a0a0a0; }
+        .data-row {
+            margin: 1.2rem 0;
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 0.5rem;
+        }
+        .data-row:last-child {
+            border-bottom: none;
+        }
+        .label { color: #888; text-align: left;}
+        .value { font-weight: bold; text-align: right;}
+        .signal-BUY { color: #4caf50; }
+        .signal-SELL { color: #f44336; }
+        .signal-HOLD { color: #9e9e9e; }
+        .position-true { color: #ffeb3b; }
+        .position-false { color: #9e9e9e; }
+    </style>
+    <script>
+        function updateDashboard() {
+            fetch('/api/status')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('price').textContent = data.price.toFixed(2);
+                    
+                    const signalEl = document.getElementById('signal');
+                    signalEl.textContent = data.signal;
+                    signalEl.className = 'value signal-' + data.signal;
+                    
+                    document.getElementById('last-signal').textContent = data.last_signal;
+                    
+                    const posEl = document.getElementById('position');
+                    posEl.textContent = data.position ? 'Active' : 'None';
+                    posEl.className = 'value position-' + data.position;
+                    
+                    document.getElementById('balance').textContent = '$' + data.balance.toFixed(2);
+                })
+                .catch(err => console.error("Error fetching status:", err));
+        }
+        
+        setInterval(updateDashboard, 5000);
+    </script>
+</head>
+<body>
+    <div class="dashboard">
+        <h1>Trading Bot Dashboard</h1>
+        <div class="data-row">
+            <span class="label">Price:</span>
+            <span class="value" id="price">{{ "%.2f"|format(state.price) }}</span>
+        </div>
+        <div class="data-row">
+            <span class="label">Signal:</span>
+            <span class="value signal-{{ state.signal }}" id="signal">{{ state.signal }}</span>
+        </div>
+        <div class="data-row">
+            <span class="label">Last Trade:</span>
+            <span class="value" id="last-signal">{{ state.last_signal }}</span>
+        </div>
+        <div class="data-row">
+            <span class="label">Position:</span>
+            <span class="value position-{{ state.position|lower }}" id="position">{{ "Active" if state.position else "None" }}</span>
+        </div>
+        <div class="data-row">
+            <span class="label">Balance:</span>
+            <span class="value" id="balance">${{ "%.2f"|format(state.balance) }}</span>
+        </div>
+    </div>
+</body>
+</html>
