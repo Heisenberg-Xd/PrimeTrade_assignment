@@ -28,6 +28,9 @@ This project is a Python-based trading bot designed for the Binance Futures Test
 | Web Dashboard | Lightweight FastAPI UI for live monitoring |
 
 
+
+
+
 ![Architecture Diagram](architecture.png)
 
 ## Project Structure
