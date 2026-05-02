@@ -1,6 +1,5 @@
 # Binance Futures Testnet Trading Bot
 
-![Architecture Diagram](assets/architecture.png)
 
 ## Overview
 
@@ -27,6 +26,9 @@ This project is a Python-based trading bot designed for the Binance Futures Test
 | Auto Trading | EMA crossover strategy for automated execution |
 | Risk Management | Stop-loss and take-profit support |
 | Web Dashboard | Lightweight FastAPI UI for live monitoring |
+
+
+![Architecture Diagram](architecture.png)
 
 ## Project Structure
 
