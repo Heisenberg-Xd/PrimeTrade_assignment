@@ -1,5 +1,7 @@
 # Binance Futures Testnet Trading Bot
 
+![Architecture Diagram](assets/architecture.png)
+
 ## Overview
 
 This project is a Python-based trading bot designed for the Binance Futures Testnet. It provides a robust command-line interface (CLI) for executing market and limit orders, alongside an automated trading engine that utilizes an Exponential Moving Average (EMA) crossover strategy. The bot features structured logging, comprehensive error handling, automatic stop-loss and take-profit mechanisms, and a lightweight web dashboard for real-time monitoring.
