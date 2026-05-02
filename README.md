@@ -15,10 +15,21 @@ This project is a Python-based trading bot designed for the Binance Futures Test
 * Stop-loss and take-profit
 * Lightweight web dashboard
 
+## Key Features
+
+| Feature | Description |
+|--------|-------------|
+| Market & Limit Orders | Place BUY and SELL orders on Binance Futures Testnet |
+| CLI Interface | Structured command-line interaction using Click |
+| Logging | File-based logging for API calls and errors |
+| Auto Trading | EMA crossover strategy for automated execution |
+| Risk Management | Stop-loss and take-profit support |
+| Web Dashboard | Lightweight FastAPI UI for live monitoring |
+
 ## Project Structure
 
-```
-trading_bot/
+```text
+PrimeTrade_assignment/
   bot/
     client.py
     config.py
@@ -41,34 +52,30 @@ trading_bot/
 
 ## Setup Instructions
 
-### 1. Clone repository
-
 ```bash
+# 1. Clone repository
 git clone <repository-url>
-cd trading_bot
-```
+cd <repository-name>
 
-### 2. Create virtual environment
-
-```bash
+# 2. Create virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+venv\Scripts\activate    # Windows
+# source venv/bin/activate  # macOS/Linux
 
-### 3. Install dependencies
-
-```bash
+# 3. Install dependencies
 pip install -r requirements.txt
-```
 
-### 4. Configure environment variables
-
-Create a `.env` file in the root directory:
-
-```env
+# 4. Configure environment variables
+# Create a .env file in the root directory:
 BINANCE_API_KEY=your_key
 BINANCE_SECRET_KEY=your_secret
 TESTNET=true
+
+# 5. Run CLI
+python cli.py balance
+
+# 6. Run dashboard
+python -m uvicorn app:app --reload
 ```
 
 ## Running the Application
@@ -137,3 +144,14 @@ python cli.py limit --symbol BTCUSDT --side SELL --quantity 0.002 --price 68500.
 * Integrate backtesting capabilities against historical data.
 * Expand the strategy engine to support multiple concurrent indicators.
 * Enhance the dashboard with historical trade charts.
+
+## Why This Implementation
+
+| Aspect | This Project | Basic Implementation |
+|-------|-------------|----------------------|
+| Code Structure | Modular and maintainable | Single script |
+| Error Handling | Structured and explicit | Minimal |
+| Logging | File-based with context | Console only |
+| CLI UX | Validated and structured | Raw input |
+| Automation | Strategy-driven | Manual execution |
+| UI | Integrated dashboard | None |
