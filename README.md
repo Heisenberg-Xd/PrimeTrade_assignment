@@ -152,6 +152,7 @@ python cli.py limit --symbol BTCUSDT --side SELL --quantity 0.002 --price 68500.
 * Integrate backtesting capabilities against historical data.
 * Expand the strategy engine to support multiple concurrent indicators.
 * Enhance the dashboard with historical trade charts.
+* Add Docker support for easy deployment.
 
 ## Why This Implementation
 
