@@ -55,6 +55,7 @@ PrimeTrade_assignment/
   app.py
   cli.py
   requirements.txt
+  .env.example
 ```
 
 ## Setup Instructions
