@@ -127,7 +127,7 @@ http://127.0.0.1:8000
 
 **Market Order Execution:**
 ```bash
-python cli.py market --symbol ETHUSDT --side BUY --quantity 0.05
+python cli.py market --symbol ETHUSDT --side BUY --quantity 0.10
 ```
 
 **Limit Order Execution:**
