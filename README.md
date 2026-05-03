@@ -12,7 +12,7 @@ This project is a Python-based trading bot designed for the Binance Futures Test
 * CLI interface
 * Logging and error handling
 * Testnet integration
-* Auto trading (EMA crossover)
+* Automated trading (EMA crossover)
 * Stop-loss and take-profit
 * Lightweight web dashboard
 
