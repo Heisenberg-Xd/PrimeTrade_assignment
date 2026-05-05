@@ -7,3 +7,4 @@ state = {
     "balance": 0.0,
     "last_trade": None,
 }
+# End of state configuration
