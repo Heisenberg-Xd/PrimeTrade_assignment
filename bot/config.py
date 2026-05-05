@@ -22,6 +22,7 @@ PROD_BASE_URL       = "https://fapi.binance.com"           # Production Futures
 # Backwards-compat alias
 TESTNET_BASE_URL = FUTURES_TESTNET_URL
 
+# ─── Logging configuration ────────────────────────────────────────────────────
 LOGS_DIR = Path(__file__).parent.parent / "logs"
 LOG_MAX_BYTES = 10 * 1024 * 1024  # 10 MB
 LOG_BACKUP_COUNT = 5
