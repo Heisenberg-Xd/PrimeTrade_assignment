@@ -105,3 +105,5 @@ def get_api_credentials() -> tuple[str, str]:
 
 def is_testnet() -> bool:
     return os.getenv("TESTNET", "true").lower() in ("true", "1", "yes")
+
+# End of configuration module
