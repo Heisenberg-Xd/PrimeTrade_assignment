@@ -1,3 +1,4 @@
+# Global bot state storage
 state = {
     "price": 0.0,
     "signal": "HOLD",
