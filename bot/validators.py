@@ -21,6 +21,8 @@ MIN_NOTIONAL_USDT = 5.0  # Binance Futures minimum notional
 
 # ─── Helpers ──────────────────────────────────────────────────────────────────
 
+# ─── Rounding and step helpers ────────────────────────────────────────────────
+# These functions ensure values comply with exchange precision requirements.
 def _round_step(value: float, step: float) -> float:
     """Round *value* down to the nearest multiple of *step*."""
     if step == 0:
