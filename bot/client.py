@@ -94,6 +94,7 @@ class BinanceClient:
 
     # ── Signature helpers ──────────────────────────────────────────────────
 
+    # This method generates the HMAC SHA256 signature for signed requests.
     def _sign(self, params: dict[str, Any]) -> dict[str, Any]:
         """Inject timestamp, recvWindow, and HMAC signature."""
         params["recvWindow"] = 60000  # 60s window – fixes clock-skew errors
