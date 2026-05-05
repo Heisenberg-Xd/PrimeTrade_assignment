@@ -23,6 +23,8 @@ from bot.validators import (
 log = logging.getLogger("bot.orders")
 
 
+# ─── Order Execution Manager ──────────────────────────────────────────────────
+# This class handles the logic for executing and validating orders.
 class OrderManager:
     """High-level order management wrapping BinanceClient with validation."""
 
