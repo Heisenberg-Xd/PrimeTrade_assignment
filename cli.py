@@ -158,6 +158,7 @@ def cli(ctx: click.Context, verbose: bool) -> None:
 
 # ─── Balance Command ──────────────────────────────────────────────────────────
 
+# Command to fetch and display the current USDT account balance
 @cli.command()
 @click.pass_context
 def balance(ctx: click.Context) -> None:
