@@ -53,6 +53,7 @@ def _make_spinner(description: str) -> Progress:
     )
 
 
+# Display a formatted error message using a Rich Panel
 def _print_error(message: str) -> None:
     console.print(Panel(f"[bold red]ERROR:[/bold red] {message}", border_style="red"))
 
