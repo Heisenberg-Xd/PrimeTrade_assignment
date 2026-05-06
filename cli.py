@@ -137,6 +137,7 @@ def _handle_api_error(exc: BinanceAPIError, client: Optional[BinanceClient] = No
 
 # ─── CLI Group ────────────────────────────────────────────────────────────────
 
+# Main CLI group entry point using the click library
 @click.group()
 @click.option("--verbose", "-v", is_flag=True, default=False, help="Enable verbose/debug output.")
 @click.pass_context
