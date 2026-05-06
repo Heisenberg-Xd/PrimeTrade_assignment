@@ -32,6 +32,7 @@ from bot.orders import OrderManager
 from pydantic import ValidationError
 
 # ─── Console setup ────────────────────────────────────────────────────────────
+# Initialize the Rich console for beautiful output
 console = Console()
 
 
