@@ -38,6 +38,7 @@ console = Console()
 
 # ─── Helpers ──────────────────────────────────────────────────────────────────
 
+# Helper function to generate the log file path based on the current date
 def _log_file_path() -> str:
     return str(LOGS_DIR / f"trading_bot_{date.today().isoformat()}.log")
 
