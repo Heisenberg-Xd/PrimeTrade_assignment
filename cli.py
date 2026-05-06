@@ -285,6 +285,7 @@ def market(
 
 # ─── Limit Order Command ──────────────────────────────────────────────────────
 
+# Command to place a limit order with optional stop loss and take profit
 @cli.command()
 @click.option("--symbol", "-s", default=None, help="Trading pair (e.g., BTCUSDT)")
 @click.option("--side", "-d", default=None, type=click.Choice(["BUY", "SELL"], case_sensitive=False))
