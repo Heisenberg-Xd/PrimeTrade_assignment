@@ -173,6 +173,15 @@
             pointer-events: none;
         }
 
+        /* Subtle diagonal reflection overlay */
+        .dashboard-reflection {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
         /* ─── Section Label ───────────────────────────────────────────────────── */
         .section-label {
             font-size: 0.65rem;
@@ -450,6 +459,7 @@
 
     <!-- ── Main dashboard card ────────────────────────────────────────────── -->
     <div class="dashboard">
+        <div class="dashboard-reflection"></div>
         <div class="section-label">Futures Bot Status</div>
 
         <!-- Market Price -->
