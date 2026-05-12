@@ -689,18 +689,18 @@ def diagnose() -> None:
 
     results = []
 
-    # ── Step 1: Internet connectivity ─────────────────────────────────────
-    console.print("[bold]Step 1:[/bold] Checking internet connectivity...")
+    # ── Step 1: Internet Connectivity ─────────────────────────────────────
+    console.print("[bold]Step 1:[/bold] Verifying global network reachability...")
     try:
         req.get("https://google.com", timeout=5)
-        console.print("  [green]PASS[/green] Internet is reachable.\n")
-        results.append(("Internet connectivity", True, ""))
+        console.print("  [green]PASS[/green] Internet connection established.\n")
+        results.append(("Global connectivity", True, ""))
     except Exception as e:
-        console.print(f"  [red]FAIL[/red] No internet: {e}\n")
-        results.append(("Internet connectivity", False, str(e)))
+        console.print(f"  [red]FAIL[/red] Network unreachable: {e}\n")
+        results.append(("Global connectivity", False, str(e)))
 
-    # ── Step 2: Server time ───────────────────────────────────────────────
-    console.print(f"[bold]Step 2:[/bold] Checking Binance {mode_name} server time...")
+    # ── Step 2: Protocol Timing Sync ─────────────────────────────────────
+    console.print(f"[bold]Step 2:[/bold] Synchronizing with Binance {mode_name} server time...")
     try:
         r = req.get(f"{base}/fapi/v1/time", timeout=10)
         server_ms = r.json().get("serverTime", 0)
@@ -708,19 +708,19 @@ def diagnose() -> None:
         drift_s = abs(server_ms - local_ms) / 1000
         if drift_s > 10:
             console.print(
-                f"  [yellow]WARN[/yellow] Clock drift is {drift_s:.1f}s "
-                f"(your PC clock may be out of sync — this causes auth failures!).\n"
+                f"  [yellow]WARN[/yellow] Clock drift detected ({drift_s:.1f}s). "
+                f"Protocol synchronization may fail. Please sync your system clock.\n"
             )
-            results.append(("Server time sync", False, f"Drift: {drift_s:.1f}s"))
+            results.append(("Protocol time sync", False, f"Drift: {drift_s:.1f}s"))
         else:
-            console.print(f"  [green]PASS[/green] Server time OK (drift: {drift_s:.2f}s).\n")
-            results.append(("Server time sync", True, ""))
+            console.print(f"  [green]PASS[/green] Time synchronization optimal (drift: {drift_s:.2f}s).\n")
+            results.append(("Protocol time sync", True, ""))
     except Exception as e:
-        console.print(f"  [red]FAIL[/red] Cannot reach server: {e}\n")
-        results.append(("Server reachable", False, str(e)))
+        console.print(f"  [red]FAIL[/red] Synchronization failed: {e}\n")
+        results.append(("Protocol time sync", False, str(e)))
 
-    # ── Step 3: Public API (no auth) ───────────────────────────────────────
-    console.print("[bold]Step 3:[/bold] Testing public API endpoint (no auth)...")
+    # ── Step 3: Public REST Gateway ───────────────────────────────────────
+    console.print("[bold]Step 3:[/bold] Validating public REST API gateway...")
     try:
         r = req.get(f"{base}/fapi/v1/ticker/price", params={"symbol": "BTCUSDT"}, timeout=10)
         price = r.json().get("price", "?")
