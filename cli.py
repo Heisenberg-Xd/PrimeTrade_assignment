@@ -635,7 +635,8 @@ def auto(ctx: click.Context, symbol: str, interval: str, quantity: float, sleep:
     console.print(f"Symbol:   [white]{symbol}[/white]")
     console.print(f"Interval: [white]{interval}[/white]")
     console.print(f"Quantity: [white]{quantity}[/white]")
-    console.print(f"Tick:     [white]{sleep}s[/white]\n")
+    console.print(f"Tick:     [white]{sleep}s[/white]")
+    console.print(f"Mode:     [bold yellow]AUTOMATED[/bold yellow]\n")
     
     try:
         with _make_spinner("Initializing AutoTrader...") as progress:
