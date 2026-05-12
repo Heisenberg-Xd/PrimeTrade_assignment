@@ -335,6 +335,21 @@
             color: var(--text-dim);
         }
 
+        /* ─── Custom Scrollbar ───────────────────────────────────────────────── */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-dim);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--border-glow);
+        }
+
         /* ─── Responsive ──────────────────────────────────────────────────────── */
         @media (max-width: 480px) {
             .dashboard { padding: 1.5rem 1.25rem; }
