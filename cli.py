@@ -2,6 +2,7 @@
 cli.py – PrimeTrade CLI Entry Point
 Interactive command-line interface for the Binance Futures Trading Bot.
 Provides rich, colour-coded output for every trading operation.
+[Last Audit: 2026-05-12]
 """
 
 import signal
