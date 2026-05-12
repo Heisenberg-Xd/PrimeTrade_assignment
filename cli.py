@@ -1,6 +1,7 @@
 """
-CLI Entry Point
+cli.py – PrimeTrade CLI Entry Point
 Interactive command-line interface for the Binance Futures Trading Bot.
+Provides rich, colour-coded output for every trading operation.
 """
 
 import signal
@@ -32,34 +33,65 @@ from bot.orders import OrderManager
 from pydantic import ValidationError
 
 # ─── Console setup ────────────────────────────────────────────────────────────
-# Initialize the Rich console for beautiful output
-console = Console()
+# Single shared Rich console instance used across all commands
+console = Console(highlight=False)
 
 
 # ─── Helpers ──────────────────────────────────────────────────────────────────
 
-# Helper function to generate the log file path based on the current date
 def _log_file_path() -> str:
+    """Returns today's log file path."""
     return str(LOGS_DIR / f"trading_bot_{date.today().isoformat()}.log")
 
 
+def _ts() -> str:
+    """Returns a dim timestamp prefix for log lines, e.g. [19:42:07]."""
+    return f"[dim][{time.strftime('%H:%M:%S')}][/dim]"
+
+
 def _make_spinner(description: str) -> Progress:
-    """Returns a Rich Progress spinner."""
+    """Returns a styled Rich Progress spinner with cyan accent."""
     return Progress(
-        SpinnerColumn(style="cyan"),
-        TextColumn("[cyan]{task.description}"),
+        SpinnerColumn(style="bold cyan"),
+        TextColumn("[bold cyan]{task.description}[/bold cyan]"),
         console=console,
         transient=True,
     )
 
 
-# Display a formatted error message using a Rich Panel
+def _print_banner() -> None:
+    """Prints the PrimeTrade ASCII art startup banner."""
+    banner = """
+[bold cyan]  ██████╗ ██████╗ ██╗███╗   ███╗███████╗████████╗██████╗  █████╗ ██████╗ ███████╗[/bold cyan]
+[bold cyan]  ██╔══██╗██╔══██╗██║████╗ ████║██╔════╝╚══██╔══╝██╔══██╗██╔══██╗██╔══██╗██╔════╝[/bold cyan]
+[bold cyan]  ██████╔╝██████╔╝██║██╔████╔██║█████╗     ██║   ██████╔╝███████║██║  ██║█████╗  [/bold cyan]
+[bold cyan]  ██╔═══╝ ██╔══██╗██║██║╚██╔╝██║██╔══╝     ██║   ██╔══██╗██╔══██║██║  ██║██╔══╝  [/bold cyan]
+[bold cyan]  ██║     ██║  ██║██║██║ ╚═╝ ██║███████╗   ██║   ██║  ██║██║  ██║██████╔╝███████╗[/bold cyan]
+[bold cyan]  ╚═╝     ╚═╝  ╚═╝╚═╝╚═╝     ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝[/bold cyan]
+"""
+    console.print(banner)
+    console.print(
+        "  [dim]Binance Futures Testnet Trading Bot[/dim]  "
+        "[bold]·[/bold]  "
+        f"[dim]{time.strftime('%Y-%m-%d  %H:%M:%S')}[/dim]"
+    )
+    console.print("  [dim]" + "─" * 72 + "[/dim]\n")
+
+
 def _print_error(message: str) -> None:
-    console.print(Panel(f"[bold red]ERROR:[/bold red] {message}", border_style="red"))
+    """Renders a formatted error panel with timestamp."""
+    console.print(
+        Panel(
+            f"{_ts()}  [bold red]✖  ERROR[/bold red]\n{message}",
+            border_style="red",
+            padding=(0, 1),
+        )
+    )
 
 
 def _print_success(message: str) -> None:
-    console.print(f"[bold green]OK[/bold green]  {message}")
+    """Prints a green success line with timestamp prefix."""
+    console.print(f"{_ts()}  [bold green]✔[/bold green]  {message}")
 
 
 def _print_order_table(order: dict, dry_run: bool = False) -> None:
@@ -102,7 +134,13 @@ def _print_order_table(order: dict, dry_run: bool = False) -> None:
 
 
 def _handle_api_error(exc: BinanceAPIError, client: Optional[BinanceClient] = None) -> None:
-    """Displays user-friendly error message for API exceptions."""
+    """
+    Displays user-friendly error message for API exceptions.
+    
+    Args:
+        exc: The exception raised by the Binance API.
+        client: Optional BinanceClient instance to fetch additional info (e.g. balance).
+    """
     if isinstance(exc, AuthenticationError):
         from bot.config import is_testnet
         mode_str = "Testnet (https://testnet.binancefuture.com)" if is_testnet() else "Production (https://www.binance.com)"
@@ -137,20 +175,18 @@ def _handle_api_error(exc: BinanceAPIError, client: Optional[BinanceClient] = No
 
 # ─── CLI Group ────────────────────────────────────────────────────────────────
 
-# Main CLI group entry point using the click library
-@click.group()
+@click.group(invoke_without_command=True)
 @click.option("--verbose", "-v", is_flag=True, default=False, help="Enable verbose/debug output.")
 @click.pass_context
 def cli(ctx: click.Context, verbose: bool) -> None:
     """
     \b
-    ==============================================
-      Binance Futures Testnet Trading Bot
-      Production-ready CLI with Rich output
-    ==============================================
-
-    Use --help on any command for detailed usage.
+    PrimeTrade – Binance Futures CLI
+    Use --help on any sub-command for detailed usage.
     """
+    # Print banner when no sub-command is given (bare `python cli.py`)
+    if ctx.invoked_subcommand is None or ctx.invoked_subcommand in ('', None):
+        _print_banner()
     setup_logging(verbose=verbose)
     ctx.ensure_object(dict)
     ctx.obj["verbose"] = verbose
